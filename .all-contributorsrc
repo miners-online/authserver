@@ -1,5 +1,5 @@
 {
-  "projectName": "base-repository",
+  "projectName": "authserver",
   "projectOwner": "Miners-Online",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -16,8 +16,7 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/41990982?v=4",
       "profile": "https://minersonline.uk/",
       "contributions": [
-        "doc",
-        "bug"
+        "doc"
       ]
     },
     {
