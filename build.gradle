@@ -1,58 +1,12 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.gradle.api.tasks.testing.logging.TestLogEvent
+subprojects {
+  apply plugin: 'java'
 
-plugins {
-  id 'java'
-  id 'application'
-  id 'com.github.johnrengelman.shadow' version '7.1.2'
-}
-
-group = 'uk.minersonline.authserver'
-version = '1.0.0-SNAPSHOT'
-
-repositories {
-  mavenCentral()
-}
-
-def vertxVersion = '4.5.4'
-def junitJupiterVersion = '5.9.1'
-
-def mainVerticleName = 'uk.minersonline.authserver.authserver.MainVerticle'
-def launcherClassName = 'io.vertx.core.Launcher'
-
-def watchForChange = 'src/**/*'
-def doOnChange = "${projectDir}/gradlew classes"
-
-application {
-  mainClassName = launcherClassName
-}
-
-dependencies {
-  implementation platform("io.vertx:vertx-stack-depchain:$vertxVersion")
-  implementation 'io.vertx:vertx-web'
-  implementation 'io.vertx:vertx-mysql-client'
-  testImplementation 'io.vertx:vertx-junit5'
-  testImplementation "org.junit.jupiter:junit-jupiter:$junitJupiterVersion"
-}
-
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-tasks.withType(ShadowJar) {
-  archiveClassifier = 'fat'
-  manifest {
-    attributes 'Main-Verticle': mainVerticleName
-  }
-  mergeServiceFiles()
-}
-
-tasks.withType(Test) {
-  useJUnitPlatform()
-  testLogging {
-    events TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED
+  repositories {
+    mavenLocal()
+    mavenCentral()
   }
 }
+// plugin location
+ext.pluginsDir = rootProject.rootDir.path + '/authserver/plugins'
 
-tasks.withType(JavaExec) {
-  args = ['run', mainVerticleName, "--redeploy=$watchForChange", "--launcher-class=$launcherClassName", "--on-redeploy=$doOnChange"]
-}
+//task build(dependsOn: [':app:uberjar'])

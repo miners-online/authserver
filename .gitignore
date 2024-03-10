@@ -183,3 +183,11 @@ nbdist/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+### Stuff ###
+/authserver/plugins
+/build
+/authserver/build
+/plugins/MinecraftSupport/build
+/plugins/build
+/serverapi/build

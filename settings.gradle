@@ -1,1 +1,6 @@
-rootProject.name = "authserver"
+rootProject.name = "authentication"
+include "serverapi"
+include "authserver"
+
+include 'plugins'
+include 'plugins:MinecraftSupport'

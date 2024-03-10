@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$PROJECT_DIR$/../../.gradle/caches/modules-2/files-2.1/org.pf4j/pf4j/3.10.0/6d8bf9dfbcb33eb8cfcee181f714de47de1774d8/pf4j-3.10.0.jar" />
+          <entry name="$PROJECT_DIR$/../../.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/2.0.6/88c40d8b4f33326f19a7d3c0aaf2c7e8721d4953/slf4j-api-2.0.6.jar" />
+          <entry name="$MAVEN_REPOSITORY$/com/github/zafarkhaja/java-semver/0.9.0/java-semver-0.9.0.jar" />
+        </processorPath>
+        <module name="authentication.authserver.main" />
+        <module name="authentication.plugins.MinecraftSupport.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="17">
+      <module name="authserver.authlib.main" target="21" />
+      <module name="authserver.authlib.test" target="21" />
+      <module name="authserver.MinecraftSupport" target="21" />
+      <module name="authserver.MinecraftSupport.main" target="21" />
+      <module name="authserver.MinecraftSupport.test" target="21" />
+      <module name="authserver.plugins" target="21" />
+      <module name="authserver.plugins.main" target="21" />
+      <module name="authserver.plugins.MinecraftSupport" target="21" />
+      <module name="authserver.plugins.MinecraftSupport.main" target="21" />
+      <module name="authserver.plugins.MinecraftSupport.test" target="21" />
+      <module name="authserver.plugins.test" target="21" />
+      <module name="authserver.serverapi" target="21" />
+      <module name="authserver.serverapi.main" target="21" />
+      <module name="authserver.serverapi.test" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
