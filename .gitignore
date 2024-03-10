@@ -191,3 +191,4 @@ nbdist/
 /plugins/MinecraftSupport/build
 /plugins/build
 /serverapi/build
+keystore.jceks

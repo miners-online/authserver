@@ -2,8 +2,13 @@ package uk.minersonline.auth.server;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
+import io.vertx.core.http.HttpServer;
+import io.vertx.ext.auth.KeyStoreOptions;
+import io.vertx.ext.auth.jwt.JWTAuth;
+import io.vertx.ext.auth.jwt.JWTAuthOptions;
+import io.vertx.ext.web.Router;
 import org.pf4j.*;
-import uk.minersonline.auth.serverapi.AuthResponseBuilder;
+import uk.minersonline.auth.serverapi.HTTPService;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -18,13 +23,23 @@ public class MainVerticle extends AbstractVerticle {
     final PluginManager pluginManager = getPluginManager();
     pluginManager.startPlugins();
     System.out.println(pluginManager.getPlugins());
-    List<AuthResponseBuilder> responseBuilders = pluginManager.getExtensions(AuthResponseBuilder.class);
+    List<HTTPService> responseBuilders = pluginManager.getExtensions(HTTPService.class);
+
+    // create jwt provider
+    JWTAuthOptions config = new JWTAuthOptions()
+      .setKeyStore(new KeyStoreOptions()
+        .setPath("keystore.jceks")
+        .setPassword("secret"));
+    JWTAuth provider = JWTAuth.create(vertx, config);
+
+    Users users = new Users(provider);
 
     AtomicInteger startCount = new AtomicInteger(0);
-    for (AuthResponseBuilder builder : responseBuilders) {
-      vertx.createHttpServer().requestHandler(
-        builder.getHandler()
-      ).listen(builder.getPort(), http -> {
+    for (HTTPService builder : responseBuilders) {
+      HttpServer server = vertx.createHttpServer();
+      Router router = Router.router(vertx);
+      builder.getHandler(router, users);
+      server.listen(builder.getPort(), http -> {
         if (http.succeeded()) {
           startCount.incrementAndGet();
           if (startCount.get() >= responseBuilders.size() ) {

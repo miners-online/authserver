@@ -7,6 +7,7 @@ targetCompatibility = JavaVersion.VERSION_17
 dependencies {
   compileOnly platform("io.vertx:vertx-stack-depchain:$vertxVersion")
   compileOnly 'io.vertx:vertx-web'
+  compileOnly "io.vertx:vertx-auth-jwt:$vertxVersion"
 
   implementation group: 'org.pf4j', name: 'pf4j', version: "${pf4jVersion}"
   implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
