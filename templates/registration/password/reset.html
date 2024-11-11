@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Change Password{% endblock %}
+{% block title %}Forget Password{% endblock %}
 
 {% block content %}
-{% if validlink %}
-<h2 class="is-size-2">Change Password</h2>
+<h2 class="is-size-2">Forget Password</h2>
 <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -22,16 +21,11 @@
             {% endfor %}
         </div>
     {% endfor %}
+
     <div class="field">
         <div class="control">
-            <button class="button is-link" type="submit">Confirm change</button>
+            <button class="button is-link" type="submit">Send email</button>
         </div>
     </div>
 </form>
-{% else %}
-<b>
-    The password reset link was invalid, possibly because it has already been used.
-    Please request a new password reset.
-</b>
-{% endif %}
 {% endblock %}

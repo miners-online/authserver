@@ -3,10 +3,29 @@
 {% block title %}Change Password{% endblock %}
 
 {% block content %}
-<h2>Change Password</h2>
+<h2 class="is-size-2">Change Password</h2>
 <form method="post">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit">Confirm change</button>
+    {% for field in form %}
+        <div class="field">
+            <label class="label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+            <div class="control">
+                {{field}}
+            </div>
+
+            {% if field.help_text %}
+                <small class="help">{{ field.help_text }}</small>
+            {% endif %}
+            {% for error in field.errors %}
+                <div class="help is-danger">{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <div class="field">
+        <div class="control">
+            <button class="button is-link" type="submit">Confirm change</button>
+        </div>
+    </div>
 </form>
 {% endblock %}
