@@ -3,18 +3,61 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}{% endblock %} - Miners Online</title>
+        <title>{% block title %}{% endblock %} - Miners Online | ID</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     </head>
 
     <body>
-        <main>
-            <section class="section">
-                <div class="container">
-                    {% block content %}
-                    {% endblock %}
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'home' %}">
+                    <img src="https://www.minersonline.uk/_vercel/image?url=%2Ffavicon.svg&w=1536&q=100">
+                    Miners Online | ID
+                </a>
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="mainNavbar" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="https://minersonline.uk">
+                        Main site
+                    </a>
                 </div>
-            </section>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            {% if not user.is_authenticated %}
+                            <a class="button is-primary" href="{% url 'signup' %}">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a class="button is-light" href="{% url 'login' %}">
+                                Login
+                            </a>
+                            {% else %}
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button class="button is-light" type="submit">Log out</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>        
+        <main>
+            {% block content %}
+            {% endblock %}
         </main>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Copyright &copy; 2023 - 2024 <strong>Miners Online</strong> by <a href="https://github.com/ajh123">Samuel Hulme</a>.
+                </p>
+            </div>
+        </footer>
     </body>
 </html>

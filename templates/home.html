@@ -4,17 +4,34 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-Hi {{ user.username }}!
+<section class="section">
+    <div class="container">
+        <h1 class="is-size-2">Hi {{ user.username }}!</h1>
 
-<p><a href="{% url 'password_change' %}">Password Change</a></p>
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Log Out</button>
-</form>
+        <p><a href="{% url 'password_change' %}">Password Change</a></p>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    </div>
+</section>
 {% else %}
-<p>You are not logged in</p>
-<p><a href="{% url 'password_reset' %}">Password Reset</a></p>
-<p><a href="{% url 'login' %}">Log In</a></p>
-<p><a href="{% url 'signup' %}">Sign up</a></p>
+<section class="hero is-info">
+    <div class="hero-body">
+        <p class="title">Miners Online | ID</p>
+        <p class="subtitle">One account, for all Miners Online services. Sign Up now to gain access!</p>
+    </div>
+</section>
+<section class="section">
+    <div class="container content">
+        <h1>Why create an account?</h1>
+        <p>With a Miners Online account you will have easy access to all Miners Online services.</p>
+
+        
+        <p><a class="button is-primary" href="{% url 'signup' %}">Register now!</a></p>
+
+        <p>Already have an account? <a href="{% url 'login' %}">Login.</a></p>
+    </div>
+</section>
 {% endif %}
 {% endblock %}
