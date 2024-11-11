@@ -1,0 +1,1 @@
+Password Reset for your {{ user.email }} Miners Online Account
