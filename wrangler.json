@@ -49,5 +49,11 @@
       "pattern": "authserver.minersonline.uk",
       "custom_domain": true
     }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "MinersOnline_AuthServer",
+      "id": "b75970a3745b4f32bb552be50dbb5422"
+    }
   ]
 }
