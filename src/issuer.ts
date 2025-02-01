@@ -13,7 +13,11 @@ import { Env } from "./utils"
 async function getUser(email: string) {
     // Get user from database
     // Return user ID
-    return "123"
+    return {
+        id: "123",
+        firstName: "John",
+        lastName: "Doe",
+    }
 }
 
 
@@ -35,7 +39,7 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
         success: async (ctx, value) => {
             if (value.provider === "password") {
                 return ctx.subject("user", {
-                    id: await getUser(value.email),
+                    ...await getUser(value.email),
                 })
             }
             throw new Error("Invalid provider")
