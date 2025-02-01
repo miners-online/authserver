@@ -32,6 +32,7 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
                 PasswordUI({
                     sendCode: async (email, code) => {
                         console.log(email, code)
+                        await env.MinersOnline_AuthServer.put(`user_code-${email}`, code);
                     },
                 }),
             ),
