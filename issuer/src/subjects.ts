@@ -28,6 +28,8 @@ export async function getUser(email: string, env: Env): Promise<User|undefined> 
 		.bind(email)
 		.first();
 	
+	console.log("get", email, result)
+
 	if (result == null) {
 		return undefined;
 	}
@@ -42,6 +44,8 @@ export async function createUser(email: string, firstName: string, lastName: str
 	)
 	.bind(email, firstName, lastName, isSetUp)
 	.run();
+
+	console.log("create", email, result)
   
 	if (!result.success) {
 		throw new Error("Failed to create user");
