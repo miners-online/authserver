@@ -55,8 +55,15 @@
   ],
   "kv_namespaces": [
     {
-      "binding": "MinersOnline_AuthServer",
+      "binding": "MinersOnline_Auth_KV",
       "id": "b75970a3745b4f32bb552be50dbb5422"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "MinersOnline_Auth_D1",
+      "database_name": "miners-online-auth",
+      "database_id": "62071a3c-4736-445d-819c-9f4e9fbac49c"
     }
   ]
 }

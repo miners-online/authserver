@@ -11,14 +11,14 @@ import { PasswordProvider } from "@openauthjs/openauth/provider/password"
 import { PasswordUI } from "@openauthjs/openauth/ui/password"
 
 import { Env } from "./utils"
-import { subjects, getUser } from "./subjects"
+import { subjects, getOrCreateUser } from "./subjects"
 import { allowDomain, sendCode } from "./auth_callbacks"
 
 export async function issuer_handler(request: Request, env: Env, ctx: ExecutionContext) {
     const app = issuer({
         allow: allowDomain,
         storage: CloudflareStorage({
-            namespace: env.MinersOnline_AuthServer,
+            namespace: env.MinersOnline_Auth_KV,
         }),
         subjects,
         providers: {
@@ -33,7 +33,7 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
         success: async (ctx, value) => {
             if (value.provider === "password") {
                 return ctx.subject("user", {
-                    ...await getUser(value.email, env),
+                    ...await getOrCreateUser(value.email, env),
                 })
             }
             throw new Error("Invalid provider")
