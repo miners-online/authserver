@@ -1,4 +1,4 @@
-import { object, string, number } from "valibot"
+import { object, string } from "valibot"
 import { createSubjects } from "@openauthjs/openauth/subject"
 
 import { Env } from "./utils"
@@ -13,11 +13,7 @@ export interface User {
 
 export const subjects = createSubjects({
 	user: object({
-		id: number(),
-		firstName: string(),
-		lastName: string(),
 		email: string(),
-		isSetUp: number(),
 	}),
 })
 

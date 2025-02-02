@@ -34,12 +34,12 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
         success: async (ctx, value) => {
             if (value.provider === "password") {
                 return ctx.subject("user", {
-                    ...await getOrCreateUser(value.email, env),
+                    email: (await getOrCreateUser(value.email, env)).email,
                 })
             }
             throw new Error("Invalid provider")
         },
     });
-    
+
     return app.fetch(request, env, ctx);
 }
