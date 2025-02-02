@@ -1,4 +1,4 @@
-import { object, string, number, boolean } from "valibot"
+import { object, string, number } from "valibot"
 import { createSubjects } from "@openauthjs/openauth/subject"
 
 import { Env } from "./utils"
@@ -8,7 +8,7 @@ export interface User {
 	firstName: string,
 	lastName: string,
 	email: string,
-	isSetUp: boolean
+	isSetUp: number
 }
 
 export const subjects = createSubjects({
@@ -17,7 +17,7 @@ export const subjects = createSubjects({
 		firstName: string(),
 		lastName: string(),
 		email: string(),
-		isSetUp: boolean(),
+		isSetUp: number(),
 	}),
 })
 
@@ -38,7 +38,7 @@ export async function getUser(email: string, env: Env): Promise<User|undefined> 
 	return result as unknown as User
 }
 
-export async function createUser(email: string, firstName: string, lastName: string, isSetUp: boolean, env: Env): Promise<User> {
+export async function createUser(email: string, firstName: string, lastName: string, isSetUp: number, env: Env): Promise<User> {
 	// Insert the user into the database
 	const result = await env.MinersOnline_Auth_D1.prepare(
 	  "INSERT INTO User (email, firstName, lastName, isSetUp) VALUES (?, ?, ?, ?)"
@@ -61,7 +61,7 @@ export async function getOrCreateUser(email: string, env: Env): Promise<User> {
 
 	// If user data does not exist, create a new user
 	if (user == undefined) {
-		user = await createUser(email, "Unnamed", "User", false, env);
+		user = await createUser(email, "Unnamed", "User", 0, env);
 	}
 
 	console.log("final result", email, user)
