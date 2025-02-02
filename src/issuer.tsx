@@ -13,8 +13,6 @@ import { PasswordUI } from "@openauthjs/openauth/ui/password"
 import { Env } from "./utils"
 import { subjects, getUser } from "./subjects"
 import { allowDomain, sendCode } from "./auth_callbacks"
-import { ProfilePage } from "./profile"
-
 
 export async function issuer_handler(request: Request, env: Env, ctx: ExecutionContext) {
     const app = issuer({
@@ -42,11 +40,5 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
         },
     });
     
-    app.get("/profile", async (c) => {
-        return c.html(
-            <ProfilePage/>
-        )
-    })
-
     return app.fetch(request, env, ctx);
 }
