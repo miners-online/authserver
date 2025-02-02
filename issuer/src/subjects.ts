@@ -31,6 +31,7 @@ export async function getUser(email: string, env: Env): Promise<User|undefined> 
 	console.log("get", email, result)
 
 	if (result == null) {
+		console.log("get", email, result == null)
 		return undefined;
 	}
 
@@ -62,6 +63,8 @@ export async function getOrCreateUser(email: string, env: Env): Promise<User> {
 	if (user == undefined) {
 		user = await createUser(email, "Unnamed", "User", false, env);
 	}
+
+	console.log("final result", email, user)
 
 	return user;
 }
