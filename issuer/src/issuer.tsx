@@ -25,6 +25,7 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
             password: PasswordProvider(
                 PasswordUI({
                     sendCode: async (email, code) => {
+                        console.log("send code", email, code)
                         sendCode(email, code, env);
                     },
                 }),
