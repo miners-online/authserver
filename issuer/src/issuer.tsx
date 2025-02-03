@@ -34,7 +34,7 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
         success: async (ctx, value) => {
             if (value.provider === "password") {
                 return ctx.subject("user", {
-                    email: (await getOrCreateUser(value.email, env)).email,
+                    id: (await getOrCreateUser(value.email, env)).id,
                 })
             }
             throw new Error("Invalid provider")

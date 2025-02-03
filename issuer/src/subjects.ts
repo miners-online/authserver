@@ -4,7 +4,7 @@ import { createSubjects } from "@openauthjs/openauth/subject"
 import { Env } from "./utils"
 
 export interface User {
-	id: number,
+	id: string,
 	firstName: string,
 	lastName: string,
 	email: string,
@@ -13,7 +13,7 @@ export interface User {
 
 export const subjects = createSubjects({
 	user: object({
-		email: string(),
+		id: string(),
 	}),
 })
 
@@ -24,10 +24,7 @@ export async function getUser(email: string, env: Env): Promise<User|undefined> 
 		.bind(email)
 		.first();
 	
-	console.log("get", email, result)
-
 	if (result == null) {
-		console.log("get", email, result == null)
 		return undefined;
 	}
 
@@ -37,13 +34,12 @@ export async function getUser(email: string, env: Env): Promise<User|undefined> 
 export async function createUser(email: string, firstName: string, lastName: string, isSetUp: number, env: Env): Promise<User> {
 	// Insert the user into the database
 	const result = await env.MinersOnline_Auth_D1.prepare(
-	  "INSERT INTO User (email, firstName, lastName, isSetUp) VALUES (?, ?, ?, ?)"
+	  "INSERT INTO User (id, email, firstName, lastName, isSetUp) VALUES (?, ?, ?, ?, ?)"
 	)
-	.bind(email, firstName, lastName, isSetUp)
+	.bind(crypto.randomUUID(), email, firstName, lastName, isSetUp)
 	.run();
 
-	console.log("create", email, result)
-  
+ 
 	if (!result.success) {
 		throw new Error("Failed to create user");
 	}
@@ -59,8 +55,6 @@ export async function getOrCreateUser(email: string, env: Env): Promise<User> {
 	if (user == undefined) {
 		user = await createUser(email, "Unnamed", "User", 0, env);
 	}
-
-	console.log("final result", email, user)
 
 	return user;
 }
