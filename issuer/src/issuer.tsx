@@ -11,7 +11,7 @@ import { PasswordProvider } from "@openauthjs/openauth/provider/password"
 import { PasswordUI } from "@openauthjs/openauth/ui/password"
 
 import { Env } from "./utils"
-import { subjects, getOrCreateUser, getUserByID } from "./subjects"
+import { subjects, getOrCreateUser, getUserByID, updateUser } from "./subjects"
 import { allowDomain, sendCode } from "./auth_callbacks"
 import { SubjectSchema } from "@openauthjs/openauth/subject"
 
@@ -55,13 +55,47 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
             )
         }
 
-        console.log(res);
-
         const id = (res as SubjectSchema).id as unknown as string;
 
         const data = await getUserByID(id, env);
 
         return c.json(data);
+    })
+
+    app.post("/userinfo", async (c) => {
+        const res = await verifyToken(c);
+        if (res.body) {
+            const err = res as TokenVerifyError
+            return c.json(
+                {
+                  error: err.body.error,
+                  error_description: err.body.error_description,
+                },
+                err.status,
+            )
+        }
+
+        const id = (res as SubjectSchema).id as unknown as string;
+
+        const fd = await c.req.formData();
+        const firstName = fd.get("firstName")?.toString();
+        const lastName = fd.get("lastName")?.toString();
+
+        const data = await getUserByID(id, env);
+
+        if (data != undefined && firstName != undefined && lastName != undefined) {
+            const upRes = await updateUser(id, data.email, firstName, lastName, 1, env);
+            if (upRes == false) {
+                return c.json({
+                    error: "Failed to update user"
+                });
+            }
+            return c.json(upRes);
+        }
+
+        return c.json({
+            error: "Failed to update user"
+        });
     })
 
     return app.fetch(request, env, ctx);
