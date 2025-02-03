@@ -17,6 +17,20 @@ export const subjects = createSubjects({
 	}),
 })
 
+export async function getUserByID(id: string, env: Env): Promise<User|undefined> {
+	const result = await env.MinersOnline_Auth_D1.prepare(
+		"SELECT * FROM User WHERE id = ?",
+	  )
+		.bind(id)
+		.first();
+	
+	if (result == null) {
+		return undefined;
+	}
+
+	return result as unknown as User
+}
+
 export async function getUser(email: string, env: Env): Promise<User|undefined> {
 	const result = await env.MinersOnline_Auth_D1.prepare(
 		"SELECT * FROM User WHERE email = ?",
