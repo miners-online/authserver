@@ -1,6 +1,3 @@
-/** @jsx jsx */
-/** @jsxImportSource hono/jsx */
-
 import { CloudflareStorage } from "@openauthjs/openauth/storage/cloudflare"
 import {
     type ExecutionContext,
