@@ -1,7 +1,7 @@
 import { object, string } from "valibot"
 import { createSubjects } from "@openauthjs/openauth/subject"
 
-import { Env } from "./utils"
+import { Env } from "./utils/types"
 
 export interface User {
 	id: string,

@@ -7,7 +7,8 @@
   "name": "authserver",
   "main": "src/index.ts",
   "compatibility_flags": [
-    "nodejs_compat"
+    "nodejs_compat",
+    "bun"
   ],
   "compatibility_date": "2025-01-29",
   "observability": {

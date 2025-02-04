@@ -1,7 +1,6 @@
 /** @jsx jsx */
 /** @jsxImportSource hono/jsx */
 
-import { issuer, TokenVerifyError } from "./patches/issuer"
 import { CloudflareStorage } from "@openauthjs/openauth/storage/cloudflare"
 import {
     type ExecutionContext,
@@ -10,13 +9,17 @@ import {
 import { PasswordProvider } from "@openauthjs/openauth/provider/password"
 import { PasswordUI } from "@openauthjs/openauth/ui/password"
 
-import { Env } from "./utils"
+import { Env } from "./utils/types"
 import { subjects, getOrCreateUser, getUserByID, updateUser } from "./subjects"
 import { allowDomain, sendCode } from "./auth_callbacks"
 import { SubjectSchema } from "@openauthjs/openauth/subject"
+import { TokenVerifyError, verifyToken } from "./utils/tokens"
+import { issuer } from "@openauthjs/openauth"
+import { OnSuccessResponder, Prettify } from "@openauthjs/openauth/issuer"
+import { issuerWrapper } from "./utils/issuer"
 
 export async function issuer_handler(request: Request, env: Env, ctx: ExecutionContext) {
-    const {app, verifyToken} = issuer({
+    const config = {
         allow: allowDomain,
         storage: CloudflareStorage({
             namespace: env.MinersOnline_Auth_KV,
@@ -32,7 +35,12 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
                 }),
             ),
         },
-        success: async (ctx, value) => {
+        success: async (ctx: OnSuccessResponder<Prettify<{
+            type: "user";
+            properties: {
+                id: string;
+            };
+        }>>, value: {provider: string, email: string}) => {
             if (value.provider === "password") {
                 return ctx.subject("user", {
                     id: (await getOrCreateUser(value.email, env)).id,
@@ -40,10 +48,12 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
             }
             throw new Error("Invalid provider")
         },
-    });
+    }
+    const app = issuer(config);
+    const i = issuerWrapper(config);
 
     app.get("/userinfo", async (c) => {
-        const res = await verifyToken(c);
+        const res = await verifyToken(c, i);
         if (res.body) {
             const err = res as TokenVerifyError
             return c.json(
@@ -63,7 +73,7 @@ export async function issuer_handler(request: Request, env: Env, ctx: ExecutionC
     })
 
     app.post("/userinfo", async (c) => {
-        const res = await verifyToken(c);
+        const res = await verifyToken(c, i);
         if (res.body) {
             const err = res as TokenVerifyError
             return c.json(
