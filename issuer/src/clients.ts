@@ -1,4 +1,4 @@
-import { AuthClients } from "./utils";
+import { AuthClients } from "./utils/types";
 
 export const authorisedClients: AuthClients = {
     "get-it-co": {

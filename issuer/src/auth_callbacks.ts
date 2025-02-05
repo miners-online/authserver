@@ -1,7 +1,7 @@
 import { isDomainMatch } from "@openauthjs/openauth/util"
 import { authorisedClients } from "./clients"
 import { Resend } from "resend";
-import { Env } from "./utils";
+import { Env } from "./utils/types";
 
 export async function allowDomain(
     input: {
