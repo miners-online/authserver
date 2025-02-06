@@ -18,6 +18,7 @@ export default function HomePage() {
                     lastName={user.lastName}
                     id={user.id}
                     photo="https://kzmg7ue4pcfxgfykz2pi.lite.vusercontent.net/placeholder.svg?height=128&width=128"
+                    editable
                 />
                 <form action={logout}>
                     <button>Logout</button>

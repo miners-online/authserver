@@ -11,11 +11,11 @@ interface Props {
 
 export function Providers({ children }: Props) {
     return (
-        <div>
+        <>
             <Theme theme="g100">
                 <MainHeader />
             </Theme>
             <Content>{children}</Content>
-        </div>
+        </>
     );
 }

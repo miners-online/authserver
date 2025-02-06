@@ -1,6 +1,7 @@
 import type React from "react"
-import { Grid, Column, Tile, TextInput } from "@carbon/react"
+import { Grid, Column, Tile, TextInput, Button } from "@carbon/react"
 import { User } from "@carbon/icons-react"
+import { Layer } from "@carbon/react"
 
 interface UserProfileProps {
   firstName: string
@@ -8,9 +9,10 @@ interface UserProfileProps {
   photo: string
   email: string
   id: string
+  editable?: boolean
 }
 
-const UserProfile: React.FC<UserProfileProps> = ({ firstName, lastName, photo, email, id }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ firstName, lastName, photo, email, id, editable = false}) => {
   return (
     <Grid className="user-profile">
       <Column lg={16} md={8} sm={4}>
@@ -31,12 +33,26 @@ const UserProfile: React.FC<UserProfileProps> = ({ firstName, lastName, photo, e
             </div>
           </div>
           <h1 className="user-profile__name">{`${firstName} ${lastName}`}</h1>
-          <div className="user-profile__fields">
-            <TextInput id="firstName" labelText="First Name" value={firstName} readOnly />
-            <TextInput id="lastName" labelText="Last Name" value={lastName} readOnly />
-            <TextInput id="email" labelText="Email" value={email} readOnly />
-            <TextInput id="userId" labelText="User ID" value={id} readOnly />
-          </div>
+          <Layer>
+            <form>
+              <div className="user-profile__fields">
+                { editable ? (
+                  <>
+                    <TextInput id="firstName" labelText="First Name" value={firstName} />
+                    <TextInput id="lastName" labelText="Last Name" value={lastName} />
+                  </>
+                ) : (
+                  <>
+                    <TextInput id="firstName" labelText="First Name" value={firstName} readOnly />
+                    <TextInput id="lastName" labelText="Last Name" value={lastName} readOnly />
+                  </>
+                )}
+                <TextInput id="email" labelText="Email" value={email} readOnly />
+                <TextInput id="userId" labelText="User ID" value={id} readOnly />
+                <Button type="submit">Update details</Button>
+              </div>
+            </form>
+          </Layer>
         </Tile>
       </Column>
     </Grid>
