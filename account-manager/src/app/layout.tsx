@@ -1,6 +1,7 @@
 import React from 'react';
 import './globals.scss';
 import { Providers } from './providers';
+import { UserProvider } from '@/utils/auth/context/UserProvider';
 
 export const metadata = {
   title: 'Miners Online Account Manager',
@@ -15,7 +16,9 @@ export default function RootLayout({ children }: Props) {
     return (
         <html lang="en" suppressHydrationWarning>
             <body>
-                <Providers>{children}</Providers>
+                <UserProvider>
+                    <Providers>{children}</Providers>
+                </UserProvider>
             </body>
         </html>
     );
