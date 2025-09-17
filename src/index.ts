@@ -1,16 +1,14 @@
 import { Hono } from 'hono'
-import { D1Database } from '@cloudflare/workers-types'
-import { auth, initAuth } from './lib/auth';
 
-type Bindings = {
-  DB: D1Database;
-};
+const app = new Hono()
 
-const app = new Hono<{ Bindings: Bindings }>()
+const welcomeStrings = [
+  'Hello Hono!',
+  'To learn more about Hono on Vercel, visit https://vercel.com/docs/frameworks/backend/hono'
+]
 
 app.get('/', (c) => {
-  initAuth(c.env);
-  return c.text('Hello Hono!')
+  return c.text(welcomeStrings.join('\n\n'))
 })
 
 export default app
