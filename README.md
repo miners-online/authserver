@@ -26,3 +26,16 @@ To deploy:
 npm install
 vc deploy
 ```
+
+To run generate migrations:
+
+```
+npx @better-auth/cli@latest generate
+npx drizzle-kit generate
+```
+
+To run migrations:
+
+```
+npx drizzle-kit migrate
+```
