@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "authserver",
   "main": "src/index.ts",
-  "compatibility_date": "2025-09-17"
+  "compatibility_date": "2025-09-17",
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
@@ -21,13 +21,13 @@
   //     "bucket_name": "my-bucket"
   //   }
   // ],
-  // "d1_databases": [
-  //   {
-  //     "binding": "MY_DB",
-  //     "database_name": "my-database",
-  //     "database_id": ""
-  //   }
-  // ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "miners-online-auth",
+      "database_id": "62071a3c-4736-445d-819c-9f4e9fbac49c"
+    }
+  ],
   // "ai": {
   //   "binding": "AI"
   // },
