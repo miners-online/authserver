@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { drizzle } from 'drizzle-orm/neon-http';
 
-import { username, oidcProvider, jwt } from "better-auth/plugins"
+import { username, oidcProvider, jwt, deviceAuthorization } from "better-auth/plugins"
 
 let schema: Record<string, unknown>;
 
@@ -36,6 +36,10 @@ export const auth = betterAuth({
   plugins: [ 
     username(),
     jwt(),
+    deviceAuthorization({ 
+      expiresIn: "30m",
+      interval: "5s",
+    }), 
     oidcProvider({ // used to host an OIDC provider not third party login
       useJWTPlugin: true,
       loginPage: "/auth/sign-in", // path to the login page
