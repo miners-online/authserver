@@ -4,7 +4,7 @@ import { drizzle } from "drizzle-orm/mysql2";
 
 import { username, oidcProvider  } from "better-auth/plugins"
 
-let schema: any;
+let schema: Record<string, any>;
 
 try {
   // Dynamic import
