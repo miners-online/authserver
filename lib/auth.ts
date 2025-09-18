@@ -47,7 +47,7 @@ export const auth = betterAuth({
           type: "web",
           redirectURLs: [
             "http://localhost:4000/api/auth/callback/miners-online",
-            "https://minersonline.uk/api/auth/callback/miners-online"
+            "https://www.minersonline.uk/api/auth/callback/miners-online"
           ],
           disabled: false,
           skipConsent: true,
