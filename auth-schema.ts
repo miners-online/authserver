@@ -109,9 +109,10 @@ export const oauthAccessToken = pgTable("oauth_access_token", {
   refreshToken: text("refresh_token").unique(),
   accessTokenExpiresAt: timestamp("access_token_expires_at"),
   refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
-  clientId: text("client_id").references(() => oauthApplication.clientId, {
-    onDelete: "cascade",
-  }),
+  // clientId: text("client_id").references(() => oauthApplication.clientId, {
+  //   onDelete: "cascade",
+  // }),
+  clientId: text("client_id"), // temporarily disable foreign key to allow trusted clients without an entry in oauth_application
   userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
   scopes: text("scopes"),
   createdAt: timestamp("created_at"),

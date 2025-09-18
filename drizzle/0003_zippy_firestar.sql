@@ -1,0 +1,1 @@
+ALTER TABLE "oauth_access_token" DROP CONSTRAINT "oauth_access_token_client_id_oauth_application_client_id_fk";
