@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from 'drizzle-orm/neon-http';
 
 import { username, oidcProvider  } from "better-auth/plugins"
 
