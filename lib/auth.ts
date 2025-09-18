@@ -4,7 +4,15 @@ import { drizzle } from "drizzle-orm/mysql2";
 
 import { username, oidcProvider  } from "better-auth/plugins"
 
-import * as schema from "@/auth-schema";
+let schema: any;
+
+try {
+  // Dynamic import
+  schema = await import("@/auth-schema");
+} catch (err) {
+  console.warn("@/auth-schema not found, using default schema");
+  schema = {}; // fallback or default schema
+}
 
 const db = drizzle(process.env.DATABASE_URL!);
 
@@ -19,7 +27,7 @@ export const auth = betterAuth({
     enabled: true,
   },
   database: drizzleAdapter(db, {
-    provider: "mysql",
+    provider: "pg",
     schema: schema
   }), 
   plugins: [ 
