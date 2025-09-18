@@ -38,6 +38,12 @@ export const auth = betterAuth({
     jwt({
       jwt: {
         issuer: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`,
+        definePayload: ({user}) => {
+          return {
+            ...user,
+            iss: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`,
+          }
+        }
       }
     }),
     deviceAuthorization({ 
