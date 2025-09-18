@@ -35,7 +35,11 @@ export const auth = betterAuth({
   ],
   plugins: [ 
     username(),
-    jwt(),
+    jwt({
+      jwt: {
+        issuer: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`,
+      }
+    }),
     deviceAuthorization({ 
       expiresIn: "30m",
       interval: "5s",
