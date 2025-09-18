@@ -34,6 +34,24 @@ export const auth = betterAuth({
     username(),
     oidcProvider({ // used to host an OIDC provider not third party login
       loginPage: "/auth/sign-in", // path to the login page
+      trustedClients: [
+        {
+          clientId: "miners-online-home",
+          clientSecret: process.env.MINERS_ONLINE_HOME_CLIENT_SECRET as string,
+          name: "Miners Online Home",
+          type: "web",
+          redirectURLs: [
+            "http://localhost:4000/api/auth/callback/miners-online",
+            "https://minersonline.uk/api/auth/callback/miners-online"
+          ],
+          disabled: false,
+          skipConsent: true,
+          metadata: {}
+        }
+      ],
+      metadata: {
+        issuer: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`
+      }
     })
   ] 
 });
