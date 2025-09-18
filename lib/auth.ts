@@ -4,12 +4,12 @@ import { drizzle } from "drizzle-orm/mysql2";
 
 import { username, oidcProvider  } from "better-auth/plugins"
 
-let schema: Record<string, any>;
+let schema: Record<string, unknown>;
 
 try {
   // Dynamic import
   schema = await import("@/auth-schema");
-} catch (err) {
+} catch (_) {
   console.warn("@/auth-schema not found, using default schema");
   schema = {}; // fallback or default schema
 }
