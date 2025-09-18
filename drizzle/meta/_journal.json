@@ -8,6 +8,13 @@
       "when": 1758190030907,
       "tag": "0000_deep_hex",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1758204695736,
+      "tag": "0001_workable_lester",
+      "breakpoints": true
     }
   ]
 }
