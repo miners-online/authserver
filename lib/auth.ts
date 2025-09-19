@@ -35,17 +35,7 @@ export const auth = betterAuth({
   ],
   plugins: [ 
     username(),
-    jwt({
-      jwt: {
-        issuer: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`,
-        definePayload: ({user}) => {
-          return {
-            ...user,
-            iss: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`,
-          }
-        }
-      }
-    }),
+    jwt(),
     deviceAuthorization({ 
       expiresIn: "30m",
       interval: "5s",
@@ -68,9 +58,6 @@ export const auth = betterAuth({
           metadata: {}
         }
       ],
-      metadata: {
-        issuer: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth`
-      }
     })
   ] 
 });

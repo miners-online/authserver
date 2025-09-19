@@ -26,7 +26,6 @@ export function Providers({ children }: { children: ReactNode }) {
         rememberMe: true,
         username: true,
       }}
-      redirectTo="/account/settings"
     >
       {children}
     </AuthUIProvider>
