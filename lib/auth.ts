@@ -8,7 +8,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
-    maxPasswordLength: 20,
+    maxPasswordLength: 128,
   },
   trustedOrigins: [
     process.env.NEXT_PUBLIC_HOME_URL as string,
