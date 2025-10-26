@@ -1,4 +1,5 @@
 import { betterAuth } from "better-auth";
+import { jwt, oidcProvider } from "better-auth/plugins";
 import { Pool } from "pg";
 
 export const auth = betterAuth({
@@ -21,10 +22,11 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     },
   },
-  advanced: {
-    crossSubDomainCookies: {
-      enabled: process.env.NODE_ENV === "production",
-      domain: ".minersonline.uk",
-    }
-  }
+  plugins: [ 
+    jwt(),
+    oidcProvider({
+      useJWTPlugin: true,
+      loginPage: "/sign-in",
+    })
+  ] 
 });

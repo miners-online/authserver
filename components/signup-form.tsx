@@ -237,7 +237,7 @@ export function SignUpForm({
             GitHub
           </Button>
           <FieldDescription className="px-6 text-center">
-            Already have an account? <a href="/signin">Sign in</a>
+            Already have an account? <a href="/sign-in">Sign in</a>
           </FieldDescription>
         </Field>
       </FieldGroup>

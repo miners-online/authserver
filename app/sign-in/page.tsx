@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import { SignInForm } from "@/components/signin"
+import { SignInForm } from "@/components/signin-form"
 
 export default function LoginPage() {
   return (
