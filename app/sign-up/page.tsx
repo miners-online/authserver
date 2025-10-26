@@ -2,17 +2,15 @@ import Image from "next/image"
 
 import { SignUpForm } from "@/components/signup-form"
 
-export default function SignupPage({
+export default async function SignupPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ callbackURL?: string | undefined }>;
 }) {
+  const params = await searchParams;
   let callbackURL = process.env.NEXT_PUBLIC_HOME_URL!;
-  const rawCallback = Array.isArray(searchParams?.callbackURL)
-    ? searchParams?.callbackURL[0]
-    : searchParams?.callbackURL;
-  if (rawCallback) {
-    callbackURL = rawCallback;
+  if (params?.callbackURL) {
+    callbackURL = params?.callbackURL;
   }
 
   return (
