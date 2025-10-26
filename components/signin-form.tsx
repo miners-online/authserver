@@ -19,25 +19,22 @@ import { Input } from "@/components/ui/input"
 
 import { authClient } from "@/lib/auth-client";
 
-import { useSearchParams } from 'next/navigation'
-
 const formSchema = z.object({
   email: z.email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters long").max(128, "Password must be at most 128 characters long"),
 });
 
+interface SignInFormProps extends React.ComponentProps<"form"> {
+  callbackURL: string;
+}
+
 export function SignInForm({
+  callbackURL,
   className,
   ...props
-}: React.ComponentProps<"form">) {
+}: SignInFormProps) {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  const searchParams = useSearchParams() 
-  let callbackURL = process.env.NEXT_PUBLIC_HOME_URL;
-  if (searchParams.get('callbackURL')) {
-    callbackURL = searchParams.get('callbackURL') as string;
-  }
 
   const form = useForm({
     defaultValues: {

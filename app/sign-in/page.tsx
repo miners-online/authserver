@@ -2,7 +2,19 @@ import Image from "next/image"
 
 import { SignInForm } from "@/components/signin-form"
 
-export default function LoginPage() {
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
+  let callbackURL = process.env.NEXT_PUBLIC_HOME_URL!;
+  const rawCallback = Array.isArray(searchParams?.callbackURL)
+    ? searchParams?.callbackURL[0]
+    : searchParams?.callbackURL;
+  if (rawCallback) {
+    callbackURL = rawCallback;
+  }
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -16,7 +28,7 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs">
-            <SignInForm />
+            <SignInForm callbackURL={callbackURL} />
           </div>
         </div>
       </div>
