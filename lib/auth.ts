@@ -12,6 +12,7 @@ export const auth = betterAuth({
   },
   trustedOrigins: [
     process.env.NEXT_PUBLIC_HOME_URL as string,
+    "https://auth.minersonline.uk",
     "http://localhost:3000",
   ],
   socialProviders: { 
