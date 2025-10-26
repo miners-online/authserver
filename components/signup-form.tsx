@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input"
 
 import { authClient } from "@/lib/auth-client";
 
+import { useSearchParams } from 'next/navigation'
+
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters long").max(50, "Name must be at most 50 characters long"),
   email: z.email("Please enter a valid email address"),
@@ -36,6 +38,12 @@ export function SignUpForm({
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const searchParams = useSearchParams() 
+  let callbackURL = process.env.NEXT_PUBLIC_HOME_URL;
+  if (searchParams.get('callbackURL')) {
+    callbackURL = searchParams.get('callbackURL') as string;
+  }
+
   const form = useForm({
     defaultValues: {
       name: "",
@@ -52,7 +60,7 @@ export function SignUpForm({
           name: value.name,
           email: value.email,
           password: value.password,
-          callbackURL: process.env.NEXT_PUBLIC_HOME_URL
+          callbackURL: callbackURL
         }, {
           onResponse: () => {
             setLoading(false)
@@ -225,6 +233,7 @@ export function SignUpForm({
             onClick={async () => {
               await authClient.signIn.social({
                 provider: "github",
+                callbackURL: callbackURL
               })
             }}
           >
@@ -237,7 +246,7 @@ export function SignUpForm({
             GitHub
           </Button>
           <FieldDescription className="px-6 text-center">
-            Already have an account? <a href="/sign-in">Sign in</a>
+            Already have an account? <a href={`/sign-in?callbackURL=${callbackURL}`}>Sign in</a>
           </FieldDescription>
         </Field>
       </FieldGroup>
