@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input"
 
 import { authClient } from "@/lib/auth-client";
 
+import { useSearchParams } from 'next/navigation'
+
 const formSchema = z.object({
   email: z.email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters long").max(128, "Password must be at most 128 characters long"),
@@ -30,6 +32,12 @@ export function SignInForm({
 }: React.ComponentProps<"form">) {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const searchParams = useSearchParams() 
+  let callbackURL = process.env.NEXT_PUBLIC_HOME_URL;
+  if (searchParams.get('callbackURL')) {
+    callbackURL = searchParams.get('callbackURL') as string;
+  }
 
   const form = useForm({
     defaultValues: {
@@ -44,7 +52,7 @@ export function SignInForm({
         await authClient.signIn.email({
           email: value.email,
           password: value.password,
-          callbackURL: process.env.NEXT_PUBLIC_HOME_URL
+          callbackURL: callbackURL
         }, {
           onResponse: () => {
             setLoading(false)
@@ -162,6 +170,7 @@ export function SignInForm({
             onClick={async () => {
               await authClient.signIn.social({
                 provider: "github",
+                callbackURL: callbackURL
               })
             }}
           >
