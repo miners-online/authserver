@@ -1,6 +1,17 @@
 import { betterAuth } from "better-auth";
-import { jwt, oidcProvider } from "better-auth/plugins";
+import { jwt, oidcProvider, openAPI } from "better-auth/plugins";
 import { Pool } from "pg";
+
+const devOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+]
+
+export const trustedOrigins = [
+  process.env.NEXT_PUBLIC_HOME_URL as string,
+  "https://auth.minersonline.uk",
+  ...(process.env.NODE_ENV !== "production" ? devOrigins : []),
+];
 
 export const auth = betterAuth({
   database: new Pool({
@@ -11,22 +22,24 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 128,
   },
-  trustedOrigins: [
-    process.env.NEXT_PUBLIC_HOME_URL as string,
-    "https://auth.minersonline.uk",
-    "http://localhost:3000",
-  ],
+  trustedOrigins: trustedOrigins,
   socialProviders: { 
     github: {
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     },
   },
+  disabledPaths: [
+    "/token", // disabled for oAuth compliance
+  ],
   plugins: [ 
-    jwt(),
+    jwt({
+      disableSettingJwtHeader: true, // disabled for oAuth compliance
+    }),
     oidcProvider({
       useJWTPlugin: true,
       loginPage: "/sign-in",
-    })
+    }),
+    openAPI(),
   ] 
 });
