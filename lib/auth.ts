@@ -40,6 +40,8 @@ export const auth = betterAuth({
       useJWTPlugin: true,
       loginPage: "/sign-in",
     }),
-    openAPI(),
+    openAPI({
+      disableDefaultReference: process.env.NODE_ENV === "production",
+    }),
   ] 
 });
