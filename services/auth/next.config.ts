@@ -5,6 +5,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/account",
+        destination: "/account/profile",
+        permanent: false,
+      },
+      {
         source: "/",
         destination: process.env.NEXT_PUBLIC_HOME_URL!,
         permanent: false,
