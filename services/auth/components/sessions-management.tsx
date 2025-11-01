@@ -33,7 +33,6 @@ export function SessionsManagement() {
       try {
         const result = await authClient.listSessions();
 
-        console.log("Fetched sessions:", result);
         if (result && "data" in result && Array.isArray(result.data)) {
           setSessions(result.data as Session[]);
         }
@@ -68,7 +67,7 @@ export function SessionsManagement() {
     setIsRevoking("all");
 
     try {
-      await authClient.revokeSessions();
+      await authClient.revokeOtherSessions();
       setSessions((prev) => prev.filter((s) => s.id === session?.session?.id));
       toast.success("All other sessions revoked");
     } catch (error) {
