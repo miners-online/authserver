@@ -9,7 +9,7 @@ const devOrigins = [
 
 export const trustedOrigins = [
   process.env.NEXT_PUBLIC_HOME_URL as string,
-  "https://auth.minersonline.uk",
+  "https://app.minersonline.uk",
   ...(process.env.NODE_ENV !== "production" ? devOrigins : []),
 ];
 
